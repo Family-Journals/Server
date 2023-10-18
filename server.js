@@ -1,13 +1,17 @@
 const express = require('express')
-const app = express()
-const PORT = 8080
+require('dotenv').config()
 
-app.get('/api/home', (req, res) => {
-  req.json({ message: 'Hello World' })
-})
+const PORT = process.env.PORT
+const baseURL = process.env.BASE_URL
+
+const userRoutes = require('./src/routes/users.ts')
+
+const app = express()
+
+app.use(express.json())
+
+app.use(`${baseURL}/users`, userRoutes)
 
 app.listen(PORT, () => {
   console.log(`||||----Server started on port ${PORT}----||||`)
 })
-
-const test = 5
